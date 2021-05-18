@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbf50fe345ab4884b1af0a55730eada1" Name="Diagram1">
+        <EntityTypeShape EntityType="CardStockManagementSystemModel.BranchCardTransactions" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CardStockManagementSystemModel.BranchInfo" Width="1.5" PointX="3.625" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CardStockManagementSystemModel.CardType" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CardStockManagementSystemModel.Customer" Width="1.5" PointX="1.375" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="CardStockManagementSystemModel.FK_BranchCardTransactions_BranchInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="CardStockManagementSystemModel.FK_BranchCardTransactions_CardType" ManuallyRouted="false" />
+        <AssociationConnector Association="CardStockManagementSystemModel.FK_BranchInfo_CardType" ManuallyRouted="false" />
+        <AssociationConnector Association="CardStockManagementSystemModel.FK_Customer_CardType" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

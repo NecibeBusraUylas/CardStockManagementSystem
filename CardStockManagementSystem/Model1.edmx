@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CardStockManagementSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BranchCardTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchId" Type="int" />
+          <Property Name="CardType" Type="int" />
+          <Property Name="Number" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="BranchInfo">
+          <Key>
+            <PropertyRef Name="BranchId" />
+          </Key>
+          <Property Name="BranchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="40" />
+          <Property Name="BranchAddress" Type="varchar" MaxLength="100" />
+          <Property Name="BranchCardType" Type="int" />
+          <Property Name="BranchCardNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="CardType">
+          <Key>
+            <PropertyRef Name="CardTypeId" />
+          </Key>
+          <Property Name="CardTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CardTypeName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="30" />
+          <Property Name="CustomerCardType" Type="int" />
+          <Property Name="NationalId" Type="varchar" MaxLength="11" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Surname" Type="varchar" MaxLength="30" />
+          <Property Name="Gender" Type="varchar" MaxLength="5" />
+          <Property Name="DayOfBirth" Type="varchar" MaxLength="20" />
+          <Property Name="PlaceOfBrith" Type="varchar" MaxLength="20" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="11" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_BranchCardTransactions_BranchInfo">
+          <End Role="BranchInfo" Type="Self.BranchInfo" Multiplicity="0..1" />
+          <End Role="BranchCardTransactions" Type="Self.BranchCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BranchInfo">
+              <PropertyRef Name="BranchId" />
+            </Principal>
+            <Dependent Role="BranchCardTransactions">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BranchCardTransactions_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="BranchCardTransactions" Type="Self.BranchCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="BranchCardTransactions">
+              <PropertyRef Name="CardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BranchInfo_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="BranchInfo" Type="Self.BranchInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="BranchInfo">
+              <PropertyRef Name="BranchCardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerCardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CardStockManagementSystemModelStoreContainer">
+          <EntitySet Name="BranchCardTransactions" EntityType="Self.BranchCardTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BranchInfo" EntityType="Self.BranchInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CardType" EntityType="Self.CardType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BranchCardTransactions_BranchInfo" Association="Self.FK_BranchCardTransactions_BranchInfo">
+            <End Role="BranchInfo" EntitySet="BranchInfo" />
+            <End Role="BranchCardTransactions" EntitySet="BranchCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BranchCardTransactions_CardType" Association="Self.FK_BranchCardTransactions_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="BranchCardTransactions" EntitySet="BranchCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BranchInfo_CardType" Association="Self.FK_BranchInfo_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="BranchInfo" EntitySet="BranchInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_CardType" Association="Self.FK_Customer_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CardStockManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BranchCardTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="CardType" Type="Int32" />
+          <Property Name="Number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BranchInfo" Relationship="Self.FK_BranchCardTransactions_BranchInfo" FromRole="BranchCardTransactions" ToRole="BranchInfo" />
+          <NavigationProperty Name="CardType1" Relationship="Self.FK_BranchCardTransactions_CardType" FromRole="BranchCardTransactions" ToRole="CardType" />
+        </EntityType>
+        <EntityType Name="BranchInfo">
+          <Key>
+            <PropertyRef Name="BranchId" />
+          </Key>
+          <Property Name="BranchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="BranchAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BranchCardType" Type="Int32" />
+          <Property Name="BranchCardNumber" Type="Int32" />
+          <NavigationProperty Name="BranchCardTransactions" Relationship="Self.FK_BranchCardTransactions_BranchInfo" FromRole="BranchInfo" ToRole="BranchCardTransactions" />
+          <NavigationProperty Name="CardType" Relationship="Self.FK_BranchInfo_CardType" FromRole="BranchInfo" ToRole="CardType" />
+        </EntityType>
+        <EntityType Name="CardType">
+          <Key>
+            <PropertyRef Name="CardTypeId" />
+          </Key>
+          <Property Name="CardTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CardTypeName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BranchCardTransactions" Relationship="Self.FK_BranchCardTransactions_CardType" FromRole="CardType" ToRole="BranchCardTransactions" />
+          <NavigationProperty Name="BranchInfo" Relationship="Self.FK_BranchInfo_CardType" FromRole="CardType" ToRole="BranchInfo" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Customer_CardType" FromRole="CardType" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerCardType" Type="Int32" />
+          <Property Name="NationalId" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="DayOfBirth" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceOfBrith" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CardType" Relationship="Self.FK_Customer_CardType" FromRole="Customer" ToRole="CardType" />
+        </EntityType>
+        <Association Name="FK_BranchCardTransactions_BranchInfo">
+          <End Role="BranchInfo" Type="Self.BranchInfo" Multiplicity="0..1" />
+          <End Role="BranchCardTransactions" Type="Self.BranchCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BranchInfo">
+              <PropertyRef Name="BranchId" />
+            </Principal>
+            <Dependent Role="BranchCardTransactions">
+              <PropertyRef Name="BranchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BranchCardTransactions_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="BranchCardTransactions" Type="Self.BranchCardTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="BranchCardTransactions">
+              <PropertyRef Name="CardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BranchInfo_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="BranchInfo" Type="Self.BranchInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="BranchInfo">
+              <PropertyRef Name="BranchCardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_CardType">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerCardType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CardStockManagementSystemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BranchCardTransactions" EntityType="Self.BranchCardTransactions" />
+          <EntitySet Name="BranchInfo" EntityType="Self.BranchInfo" />
+          <EntitySet Name="CardType" EntityType="Self.CardType" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" />
+          <AssociationSet Name="FK_BranchCardTransactions_BranchInfo" Association="Self.FK_BranchCardTransactions_BranchInfo">
+            <End Role="BranchInfo" EntitySet="BranchInfo" />
+            <End Role="BranchCardTransactions" EntitySet="BranchCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BranchCardTransactions_CardType" Association="Self.FK_BranchCardTransactions_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="BranchCardTransactions" EntitySet="BranchCardTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BranchInfo_CardType" Association="Self.FK_BranchInfo_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="BranchInfo" EntitySet="BranchInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_CardType" Association="Self.FK_Customer_CardType">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CardStockManagementSystemModelStoreContainer" CdmEntityContainer="CardStockManagementSystemEntities1">
+          <EntitySetMapping Name="BranchCardTransactions">
+            <EntityTypeMapping TypeName="CardStockManagementSystemModel.BranchCardTransactions">
+              <MappingFragment StoreEntitySet="BranchCardTransactions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="CardType" ColumnName="CardType" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BranchInfo">
+            <EntityTypeMapping TypeName="CardStockManagementSystemModel.BranchInfo">
+              <MappingFragment StoreEntitySet="BranchInfo">
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchAddress" ColumnName="BranchAddress" />
+                <ScalarProperty Name="BranchCardType" ColumnName="BranchCardType" />
+                <ScalarProperty Name="BranchCardNumber" ColumnName="BranchCardNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CardType">
+            <EntityTypeMapping TypeName="CardStockManagementSystemModel.CardType">
+              <MappingFragment StoreEntitySet="CardType">
+                <ScalarProperty Name="CardTypeId" ColumnName="CardTypeId" />
+                <ScalarProperty Name="CardTypeName" ColumnName="CardTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="CardStockManagementSystemModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="CustomerCardType" ColumnName="CustomerCardType" />
+                <ScalarProperty Name="NationalId" ColumnName="NationalId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DayOfBirth" ColumnName="DayOfBirth" />
+                <ScalarProperty Name="PlaceOfBrith" ColumnName="PlaceOfBrith" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
